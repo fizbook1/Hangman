@@ -173,7 +173,7 @@ namespace Hangman
                         else if (guessedWordCompletely == false && charInput.Length == 0) { Console.WriteLine("You didn't write anything!"); }
                         else
                         {
-                            Console.WriteLine("If you wish to guess what the word is, type 'guess' otherwise, please only enter one character.");
+                            Console.WriteLine("If you wish to guess what the word is, type 'guess'. Otherwise, please only enter one character.");
                             Console.WriteLine("");
                         }
 
