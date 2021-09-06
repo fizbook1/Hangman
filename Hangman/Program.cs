@@ -158,11 +158,11 @@ namespace Hangman
                                 }
                             }
 
+                        //återställer till nästa loop
+                        counter = 0;
+                        alreadyGuessed = false;
+                        correctGuess = false;
 
-                            //återställer till nästa loop
-                            counter = 0;
-                            alreadyGuessed = false;
-                            correctGuess = false;
                         }
                         else if (charInput == "guess")
                         {
@@ -176,6 +176,27 @@ namespace Hangman
                                 }
                             }
                             else {
+                                /*char[] multiGuessChars = charInput.ToCharArray();
+                                for (int i = 1; i < (wordLetters.Length); i++)
+                                {
+                                    foreach (char T in multiGuessChars)
+                                    {
+                                        if (T == wordLetters[i] && correctGuesses.Contains(T) == false) //ifall bokstaven i gissade bokstäver stämmer överens med en av ordets bokstäver så skrivs bokstaven ut på den platsen av den bokstäven
+                                        {
+                                            //wordLetters[counter];
+                                            currentCycleReturnedValue = true;
+                                            correctGuesses.Add(T);
+                                            guessedChars.Add(T);
+                                        }
+                                        
+                                    }
+                                    if (currentCycleReturnedValue == false && correctGuesses.Contains(multiGuessChars[i]) == false)
+                                    {
+                                        health--;
+                                    }
+                                    currentCycleReturnedValue = false;
+                                }*/
+                                
                                 health--;
                                 correctStreak = 0;
                                 if (health > 0) //så den inte säger att du har 0 försök kvar
@@ -190,21 +211,13 @@ namespace Hangman
                             Console.WriteLine("If you wish to guess what the word is, type 'guess'. Otherwise, please only enter one character.");
                             Console.WriteLine("");
                         }
-
-                        /* Gör färdigt detta en vacker dag när du inte är lika trött
-                        Console.WriteLine("Press the any key to proceed.");
-                        Console.ReadKey();
-                        Console.Clear();
-                        */ 
-
                     }
 
-                    if (health < 1) //när du misslyckas :(
+                    if (health < 1) // :(
                     {
                         Console.WriteLine("I'm sorry. You lost the game. The word was " + playedWord + ".");
                     }
-                    
-                    if (correctGuesses.Count == playedWord.Length || guessedWordCompletely == true) //when the amount of correct guesses are the same as the length of the played word the player wins and the game ends
+                    if (correctGuesses.Count == playedWord.Length || guessedWordCompletely == true) 
                     {
                         Console.WriteLine("Congratulations! You win :)");
                         Console.WriteLine("The word is " + playedWord + "!");
