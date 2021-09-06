@@ -39,6 +39,7 @@ namespace Hangman
 
             //manage
             int numInput;
+            List<string> wordList = new List<string>();
 
             //display 
             StringBuilder progressDisplay = new StringBuilder(50);
@@ -46,8 +47,14 @@ namespace Hangman
             //här börjar grejer
 
 
+            if (File.Exists(path) == false) {
+                File.Create(path);
+            }
 
-            List<string> wordList = File.ReadAllLines("WordList.txt").ToList();
+            wordList = File.ReadAllLines("WordList.txt").ToList();
+            wordList.Add("assurance");
+            wordList.Add("capybara");
+            wordList.Add("raspberry");
             Console.WriteLine("Hello World!");
             Console.WriteLine("Type 'play' to start a game with a random word in the library.");
             Console.WriteLine("Type 'manage' to add or remove words from the library.");
@@ -95,6 +102,13 @@ namespace Hangman
                            counter++;
                         }
                         Console.WriteLine(progressDisplay);
+                        if (health < 8) { Console.WriteLine("_____"); }
+                        if (health < 7) { Console.WriteLine("  |  "); }
+                        if (health < 6) { Console.WriteLine("  O  "); } 
+                        if (health < 5) { Console.WriteLine(" /X\\ "); }
+                        if (health < 4) { Console.WriteLine("/ X \\ "); }
+                        if (health < 3) { Console.WriteLine(" / \\ "); }
+                        if (health < 2) { Console.WriteLine("/   \\"); }
                         if (correctStreak > 2)
                         {
                             Console.WriteLine("Guessed " + correctStreak + " letters correctly in a row!");
