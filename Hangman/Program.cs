@@ -21,7 +21,7 @@ namespace Hangman
             string charInput;
 
             //gameplay grejer
-            int health = 10;
+            int health = 8;
             string playedWord;
             char[] wordLetters;
             List<char> correctGuesses = new List<char>();
@@ -57,14 +57,14 @@ namespace Hangman
             wordList.Add("raspberry");
             Console.WriteLine("Hello World!");
             Console.WriteLine("Type 'play' to start a game with a random word in the library.");
-            Console.WriteLine("Type 'manage' to add or remove words from the library.");
+            Console.WriteLine("Type 'manage' to add or (in the future!) remove words from the library.");
             menuSelection = Console.ReadLine();
 
             switch (menuSelection)
             {
                 case "play":
                     
-                    playedWord = wordList[rand.Next(wordList.Count)].ToLower(); // temporary, hopefully
+                    playedWord = wordList[rand.Next(wordList.Count)].ToLower(); // temporary, hopefully UPDATE: it was not temporary
                     wordLetters = playedWord.ToCharArray();
                     correctGuesses.ToArray();
                     while (correctGuesses.Count < playedWord.Length && health > 0)
@@ -81,26 +81,27 @@ namespace Hangman
                             Console.WriteLine("Repeating a previous guess or guessing correctly will not remove a try.");
                             Console.WriteLine("To guess the entire word, type 'guess' instead of a letter.");
                         }
+
                         while (counter < playedWord.Length && guessedChars.Count > 0)
                         {
                            foreach(char T in guessedChars)  
                            {
-                                if (T == wordLetters[counter]) //ifall bokstaven i gissade bokstäver stämmer överens med en av ordets bokstäver så skrivs bokstaven ut på den platsen.
+                                if (T == wordLetters[counter]) //ifall bokstaven i gissade bokstäver stämmer överens med en av ordets bokstäver så skrivs bokstaven ut på den platsen av den bokstäven
                                 {
                                     progressDisplay.Append("[");
                                     progressDisplay.Append(wordLetters[counter]);
                                     progressDisplay.Append("]");
                                     currentCycleReturnedValue = true;
                                 }
-                           }
-                             
-                           if(currentCycleReturnedValue == false) //ifall ingen bokstav stämmer överens skriver den ett tomrum
+                           }                          
+                           if(currentCycleReturnedValue == false)
                            {
                                 progressDisplay.Append("[_]");                          
                            }
                            currentCycleReturnedValue = false;
                            counter++;
                         }
+
                         Console.WriteLine(progressDisplay);
                         if (health < 8) { Console.WriteLine("_____"); }
                         if (health < 7) { Console.WriteLine("  |  "); }
@@ -109,6 +110,7 @@ namespace Hangman
                         if (health < 4) { Console.WriteLine("/ X \\ "); }
                         if (health < 3) { Console.WriteLine(" / \\ "); }
                         if (health < 2) { Console.WriteLine("/   \\"); }
+                        //jätteklumpigt men det fungerar och det är allt jag bryr mig om just nu 
                         if (correctStreak > 2)
                         {
                             Console.WriteLine("Guessed " + correctStreak + " letters correctly in a row!");
@@ -116,33 +118,31 @@ namespace Hangman
                         progressDisplay.Clear();
                         counter = 0;
 
-
-                        charInput = Console.ReadLine().ToLower(); //läs bokstaven
-                        if (charInput.Length == 1) //om input är exakt en bokstav
+                        charInput = Console.ReadLine().ToLower(); 
+                        if (charInput.Length == 1) 
                         {
-                            currentGuess = char.Parse(charInput); //konvertera till en variabel för den nuvarande gissningen
-                            while (counter < guessedChars.Count) //kollar om bokstaven gissats på tidigare
+                            currentGuess = char.Parse(charInput); 
+                            while (counter < guessedChars.Count) 
                             {
-                                if (currentGuess == guessedChars[counter]) //om bokstaven gissats på tidigare så säger den till och man får inte poängavdrag eller bonus
+                                if (currentGuess == guessedChars[counter]) 
                                 {
                                     Console.WriteLine("You have already guessed this letter!");
-                                    alreadyGuessed = true; //håller koll på om den nuvarande gissningen redan gjorts
+                                    alreadyGuessed = true;
                                 }
                                 counter++;
                             }
                             counter = 0;
 
-
-                            if (alreadyGuessed == false) //körs bara om bokstaven inte gissats tidigare
+                            if (alreadyGuessed == false)
                             {
-                                guessedChars.Add(currentGuess); //lägger till gissningen till listan av gissningar
+                                guessedChars.Add(currentGuess); 
                                 while (counter < playedWord.Length)
                                 {
-                                    if (currentGuess == wordLetters[counter]) //om gissningen innehåller en av ordets bokstäver så körs denna
+                                    if (currentGuess == wordLetters[counter]) 
                                     {
-                                        correctGuesses.Add(currentGuess); //lägger till denna gissning i listan av korrekta gissningar)
+                                        correctGuesses.Add(currentGuess); 
                                         Console.WriteLine("Correct guess!");
-                                        correctGuess = true; //genom något mirakel funkar detta även när flera av samma bokstav förekommer
+                                        correctGuess = true; //funkar vid flera av samma bokstav pga lägger till bokstaven lika många gånger som den finns i ordet
                                         correctStreak++;
                                     }
                                     counter++;
@@ -203,19 +203,17 @@ namespace Hangman
                     {
                         Console.WriteLine("I'm sorry. You lost the game. The word was " + playedWord + ".");
                     }
-
                     
                     if (correctGuesses.Count == playedWord.Length || guessedWordCompletely == true) //when the amount of correct guesses are the same as the length of the played word the player wins and the game ends
                     {
                         Console.WriteLine("Congratulations! You win :)");
                         Console.WriteLine("The word is " + playedWord + "!");
                     }
-
                     break;
+
                 case "manage":
                     while(exitGame == false) 
-                    {
-                        
+                    { 
                         Console.WriteLine("To view the existing words, type 'view'.");
                         Console.WriteLine("To add a word, type 'add'.");
                         menuSelection = Console.ReadLine();
