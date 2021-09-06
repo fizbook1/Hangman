@@ -10,11 +10,7 @@ namespace Hangman
     {
         static void Main(string[] args)
         {
-            //för att slumpa ett ord från en lista kanske lite för satsigt gör färdigt en annan gång
-
             string path = "WordList.txt";
-
-            //List<string> wordList = new List<string>();
 
             //input stuff
             string menuSelection;
@@ -44,9 +40,8 @@ namespace Hangman
             //display 
             StringBuilder progressDisplay = new StringBuilder(50);
             var rand = new Random();
+
             //här börjar grejer
-
-
             if (File.Exists(path) == false) {
                 File.Create(path);
             }
@@ -86,7 +81,7 @@ namespace Hangman
                         {
                            foreach(char T in guessedChars)  
                            {
-                                if (T == wordLetters[counter]) //ifall bokstaven i gissade bokstäver stämmer överens med en av ordets bokstäver så skrivs bokstaven ut på den platsen av den bokstäven
+                                if (T == wordLetters[counter])
                                 {
                                     progressDisplay.Append("[");
                                     progressDisplay.Append(wordLetters[counter]);
@@ -142,7 +137,7 @@ namespace Hangman
                                     {
                                         correctGuesses.Add(currentGuess); 
                                         Console.WriteLine("Correct guess!");
-                                        correctGuess = true; //funkar vid flera av samma bokstav pga lägger till bokstaven lika många gånger som den finns i ordet
+                                        correctGuess = true;
                                         correctStreak++;
                                     }
                                     counter++;
@@ -151,15 +146,12 @@ namespace Hangman
                                 {
                                     health--;
                                     correctStreak = 0;
-                                    if (health > 0) //så den inte säger att du har 0 försök kvar
+                                    if (health > 0)
                                     {
                                         Console.WriteLine("Sorry, that's not right! You have " + health + " tries remaining."); 
                                     }
                                 }
                             }
-
-
-                            //återställer till nästa loop
                             counter = 0;
                             alreadyGuessed = false;
                             correctGuess = false;
@@ -178,7 +170,7 @@ namespace Hangman
                             else {
                                 health--;
                                 correctStreak = 0;
-                                if (health > 0) //så den inte säger att du har 0 försök kvar
+                                if (health > 0)
                                 {
                                     Console.WriteLine("Sorry, that's not right! You have " + health + " tries remaining.");
                                 }
@@ -190,16 +182,9 @@ namespace Hangman
                             Console.WriteLine("If you wish to guess what the word is, type 'guess'. Otherwise, please only enter one character.");
                             Console.WriteLine("");
                         }
-
-                        /* Gör färdigt detta en vacker dag när du inte är lika trött
-                        Console.WriteLine("Press the any key to proceed.");
-                        Console.ReadKey();
-                        Console.Clear();
-                        */ 
-
                     }
 
-                    if (health < 1) //när du misslyckas :(
+                    if (health < 1)
                     {
                         Console.WriteLine("I'm sorry. You lost the game. The word was " + playedWord + ".");
                     }
@@ -226,20 +211,6 @@ namespace Hangman
                                 File.WriteAllLines(path, wordList, Encoding.UTF8);
 
                             break;
-                            /* case "view":
-                                 foreach (string str in wordList) { 
-                                 Console.WriteLine("[" + counter + "]" + wordList[counter]);
-                                     counter++;
-                                 }
-                                 Console.WriteLine("To remove an item, type the number corresponding to the word you wish to delete.");
-                                 Console.WriteLine("If you don't wish to make any changes, type skip.");
-                                 counter = 0;
-                                 charInput = Console.ReadLine();
-                                 if (charInput.All(char.IsDigit) == true)
-                                 {
-                                     numInput =  parse
-                                 }
-                                 break; */
                             default:
                                 Console.WriteLine("pls do as told");
                                 exitGame = true;
